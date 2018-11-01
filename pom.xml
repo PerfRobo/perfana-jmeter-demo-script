@@ -27,7 +27,7 @@
         <debug>false</debug>
 
         <!-- Default graphite namespace -->
-        <graphitePrefix>jmeter2.debug</graphitePrefix>
+        <graphitePrefix>gatling2.debug</graphitePrefix>
 
 
         <!-- Hostname for using in jmeter.data.graphite.rootPreFix when running distributed test on Linux injectors-->
@@ -37,10 +37,10 @@
         <isMasterScript>true</isMasterScript>
 
         <!-- By default don't send data to targets-io -->
-        <perfanaEnabled>false</perfanaEnabled>
+        <perfanaEnabled>true</perfanaEnabled>
 
         <!-- By default don't assert test results -->
-        <assertResultsEnabled>false</assertResultsEnabled>
+        <assertResultsEnabled>true</assertResultsEnabled>
 
         <!-- Default load settings -->
            <test.duration>900</test.duration>
@@ -97,7 +97,24 @@
             <plugin>
                    <groupId>com.github.perfrobo</groupId>
 		   <artifactId>perfana-jmeter-maven-plugin</artifactId>
-		   <version>1.0.1</version>
+		   <version>1.0.1</version>	
+		    <configuration>
+			    <propertiesUser>
+		            <perfanaUrl>${perfanaUrl}</perfanaUrl>
+		            <application>${application}</application>
+		            <applicationRelease>${applicationRelease}</applicationRelease>
+		            <testType>${testType}</testType>
+		            <testEnvironment>${testEnvironment}</testEnvironment>
+		            <testRunId>${testRunId}</testRunId>
+		            <CIBuildResultsUrl>${CIBuildResultsUrl}</CIBuildResultsUrl>
+		            <rampupTimeInSeconds>${test.rampup}</rampupTimeInSeconds>
+		            <constantLoadTimeInSeconds>${test.throughput}</constantLoadTimeInSeconds>
+		            <assertResultsEnabled>${assertResultsEnabled}</assertResultsEnabled>
+		            <perfanaEnabled>${perfanaEnabled}</perfanaEnabled>
+                   
+              
+			</propertiesUser>
+                </configuration>
                     <executions>
                         <execution>
                             <id>jmeter-tests</id>
@@ -161,7 +178,7 @@
               	<test.duration>900</test.duration>
 		 		 <test.rampup>300</test.rampup>
                 <perfanaEnabled>true</perfanaEnabled>
-                <graphitePrefix>jmeter2</graphitePrefix>
+                <graphitePrefix>gatling2</graphitePrefix>
                 <testRunId>${application}-${applicationRelease}-${testType}-${testEnvironment}-${build.time}</testRunId>
             </properties>
         </profile>
@@ -178,7 +195,7 @@
               	<test.duration>600</test.duration>
 		 		 <test.rampup>30</test.rampup>
                 <perfanaEnabled>true</perfanaEnabled>
-                <graphitePrefix>jmeter2</graphitePrefix>
+                <graphitePrefix>gatling2</graphitePrefix>
                 <testRunId>${application}-${applicationRelease}-${testType}-${testEnvironment}-${build.time}</testRunId>
             </properties>
         </profile>
@@ -195,7 +212,7 @@
               	<test.duration>174600</test.duration>
 		 		 <test.rampup>300</test.rampup>
                 <perfanaEnabled>true</perfanaEnabled>
-                <graphitePrefix>jmeter2</graphitePrefix>
+                <graphitePrefix>gatling2</graphitePrefix>
                 <testRunId>${application}-${applicationRelease}-${testType}-${testEnvironment}-${build.time}</testRunId>
             </properties>
         </profile>
@@ -214,7 +231,7 @@
               	<test.duration>600</test.duration>
 		 		 <test.rampup>120</test.rampup>
                 <perfanaEnabled>true</perfanaEnabled>
-                <graphitePrefix>jmeter2</graphitePrefix>
+                <graphitePrefix>gatling2</graphitePrefix>
                 <testRunId>${application}-${applicationRelease}-${testType}-${testEnvironment}-${build.time}</testRunId>
             </properties>
         </profile>
@@ -231,7 +248,7 @@
             </activation>
             <properties>
                 <debug>true</debug>
-                <graphitePrefix>jmeter2.debug</graphitePrefix>
+                <graphitePrefix>gatling2.debug</graphitePrefix>
                 <scenario>debug</scenario>
             </properties>
         </profile>
@@ -268,7 +285,7 @@
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
-                <graphitePrefix>jmeter2.${hostname}</graphitePrefix>
+                <graphitePrefix>gatling2.${hostname}</graphitePrefix>
             </properties>
         </profile>
 

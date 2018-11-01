@@ -95,34 +95,9 @@
                 
             </plugin>
             <plugin>
-                   <groupId>com.github.perfrobo</groupId>
-		   <artifactId>perfana-jmeter-maven-plugin</artifactId>
-		   <version>1.0.1</version>	
-		    <configuration>
-			    <propertiesUser>
-		            <perfanaUrl>${perfanaUrl}</perfanaUrl>
-		            <application>${application}</application>
-		            <applicationRelease>${applicationRelease}</applicationRelease>
-		            <testType>${testType}</testType>
-		            <testEnvironment>${testEnvironment}</testEnvironment>
-		            <testRunId>${testRunId}</testRunId>
-		            <CIBuildResultsUrl>${CIBuildResultsUrl}</CIBuildResultsUrl>
-		            <rampupTimeInSeconds>${test.rampup}</rampupTimeInSeconds>
-		            <constantLoadTimeInSeconds>${test.throughput}</constantLoadTimeInSeconds>
-		            <assertResultsEnabled>${assertResultsEnabled}</assertResultsEnabled>
-		            <perfanaEnabled>${perfanaEnabled}</perfanaEnabled>
-                   
-              
-			</propertiesUser>
-                </configuration>
-                    <executions>
-                        <execution>
-                            <id>jmeter-tests</id>
-                            <goals>
-                                <goal>jmeter</goal>
-                            </goals>
-                        </execution>
-                    </executions>
+                   <groupId>com.lazerycode.jmeter</groupId>
+                <artifactId>jmeter-maven-plugin</artifactId>
+                <version>2.0.3</version>
                 </plugin>
            
         </plugins>

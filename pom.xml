@@ -19,7 +19,8 @@
  		<perfana-jmeter-maven-plugin.version>1.0.1</perfana-jmeter-maven-plugin.version>
  		
         <!-- Perfana url  -->
-        <perfanaUrl>http://perfana:3000</perfanaUrl>
+        <perfanaUrl>http://perfana:4000</perfanaUrl>
+
         <!-- By default no proxy is used -->
         <useProxy>false</useProxy>
 
@@ -45,16 +46,19 @@
         <!-- Default load settings -->
            <test.duration>900</test.duration>
            <test.threads>1</test.threads>
-		   <test.rampup>60</test.rampup>
-		   <test.throughput>2</test.throughput>
+	   <test.rampup>60</test.rampup>
+	   <test.throughput>2</test.throughput>
 
         
          <!-- Settings for the perfana Dashboard -->
         <application>Mean</application>
         <applicationRelease>1.0</applicationRelease>
         
-  		<!-- By default Jenkins build Url is used -->
+	<!-- By default Jenkins build Url is used -->
         <CIBuildResultsUrl>${BUILD_URL}</CIBuildResultsUrl>
+
+	<!-- By default test type is used -->
+        <testType>LoadTest</testType>
     </properties>
     
         

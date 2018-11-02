@@ -16,7 +16,7 @@
     <properties>
         <encoding>UTF-8</encoding>
         <maven.build.timestamp.format>yyyyMMdd_HHmm</maven.build.timestamp.format>
- 		<perfana-jmeter-maven-plugin.version>1.0.1</perfana-jmeter-maven-plugin.version>
+ 		<perfana-jmeter-maven-plugin.version>1.0.2</perfana-jmeter-maven-plugin.version>
  		
         <!-- Perfana url  -->
         <perfanaUrl>http://perfana:4000</perfanaUrl>
@@ -101,7 +101,7 @@
             <plugin>
               <groupId>com.github.perfrobo</groupId>
 	      <artifactId>perfana-jmeter-maven-plugin</artifactId>
-	      <version>1.0.1</version>	
+	      <version>1.0.2</version>	
 	      <configuration>
 		 <propertiesUser>
 		 <perfanaUrl>${perfanaUrl}</perfanaUrl>

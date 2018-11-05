@@ -1268,7 +1268,7 @@
             </elementProp>
             <elementProp name="application" elementType="Argument">
               <stringProp name="Argument.name">application</stringProp>
-              <stringProp name="Argument.value">http://${__P(test.application,Unknown application)}</stringProp>
+              <stringProp name="Argument.value">${__P(test.application,Unknown application)}</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="measurement" elementType="Argument">

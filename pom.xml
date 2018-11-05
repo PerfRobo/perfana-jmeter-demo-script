@@ -1,305 +1,162 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
-    
     <groupId>com.jmeter.demo</groupId>
-    <artifactId>jmeter-perfanan-script</artifactId>
+    <artifactId>jmeter-demo-script</artifactId>
     <version>1.0-SNAPSHOT</version>
-    
-    
-    <!--<parent>-->
-    <!--<groupId>com.afklm.maven.pom</groupId>-->
-    <!--<artifactId>kl-projects-pom</artifactId>-->
-    <!--<version>3.1.6</version>-->
-    <!--</parent>-->
-    
+
     <properties>
         <encoding>UTF-8</encoding>
         <maven.build.timestamp.format>yyyyMMdd_HHmm</maven.build.timestamp.format>
- 		<perfana-jmeter-maven-plugin.version>1.0.2</perfana-jmeter-maven-plugin.version>
- 		
-        <!-- Perfana url  -->
-        <perfanaUrl>http://perfana:4000</perfanaUrl>
 
-        <!-- By default no proxy is used -->
-        <useProxy>false</useProxy>
+        <!-- Settings for Perfana dashboard -->
+        <perfana.application>Mean</perfana.application>
+        <perfana.applicationRelease>1.0</perfana.applicationRelease>
 
-        <!-- By default debugmode is off -->
-        <debug>false</debug>
+        <!-- influxdb server -->
+        <test.influxdb.url>http://localhost:8086</test.influxdb.url>
 
-        <!-- Default graphite namespace -->
-        <graphitePrefix>gatling2.debug</graphitePrefix>
+        <!-- By default Jenkins build Url is used -->
+        <perfana.buildResultsUrl>${BUILD_URL}</perfana.buildResultsUrl>
 
 
-        <!-- Hostname for using in jmeter.data.graphite.rootPreFix when running distributed test on Linux injectors-->
-        <hostname>${env.INJECTOR}</hostname>
 
-        <!-- By default the scripts runs as master -->
-        <isMasterScript>true</isMasterScript>
 
-        <!-- By default don't send data to targets-io -->
-        <perfanaEnabled>true</perfanaEnabled>
-
-        <!-- By default don't assert test results -->
-        <assertResultsEnabled>true</assertResultsEnabled>
-
-        <!-- Default load settings -->
-           <test.duration>900</test.duration>
-           <test.threads>1</test.threads>
-	   <test.rampup>60</test.rampup>
-	   <test.throughput>2</test.throughput>
-
-        
-         <!-- Settings for the perfana Dashboard -->
-        <application>Mean</application>
-        <applicationRelease>1.0</applicationRelease>
-        
-	<!-- By default Jenkins build Url is used -->
-        <CIBuildResultsUrl>${BUILD_URL}</CIBuildResultsUrl>
-
-	<!-- By default test type is used -->
-        <testType>LoadTest</testType>
     </properties>
-    
-        
-    <repositories>
- 		 <repository>
-   		 <id>project.local</id>
-   		 <name>project</name>
-   		 <url>file:${project.basedir}/repo</url>
-  		</repository>
-	</repositories>
-
-	
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>io.perfana</groupId>
+                    <artifactId>perfana-jmeter-maven-plugin</artifactId>
+                    <version>1.0.1</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.0.0</version>
+                <groupId>io.perfana</groupId>
+                <artifactId>perfana-jmeter-maven-plugin</artifactId>
+                <configuration>
+                    <perfanaEnabled>true</perfanaEnabled>
+                    <perfanaUrl>http://localhost:4000</perfanaUrl>
+                    <perfanaAssertResultsEnabled>true</perfanaAssertResultsEnabled>
+                    <perfanaApplication>${perfana.application}</perfanaApplication>
+                    <perfanaTestEnvironment>local</perfanaTestEnvironment>
+                    <perfanaTestRunId>${testRunId}</perfanaTestRunId>
+                    <perfanaApplicationRelease>1.0</perfanaApplicationRelease>
+                    <perfanaTestType>${perfana.testType}</perfanaTestType>
+                    <perfanaRampupTimeInSeconds>${test.rampup}</perfanaRampupTimeInSeconds>
+                    <perfanaConstantLoadTimeInSeconds>${test.duration}</perfanaConstantLoadTimeInSeconds>
+                    <perfanaCIBuildresultsUrl>${perfana.buildResultsUrl}</perfanaCIBuildresultsUrl>
+
+                    <propertiesUser>
+
+                        <test.duration>${test.duration}</test.duration>
+                        <test.threads>${test.threads}</test.threads>
+                        <test.rampup>${test.rampup}</test.rampup>
+                        <test.throughput>${test.throughput}</test.throughput>
+                        <test.productHost>${test.productHost}</test.productHost>
+                        <test.productPort>${test.productPort}</test.productPort>
+                        <test.influxdb.url>${test.influxdb.url}</test.influxdb.url>
+                        <test.application>${perfana.application}</test.application>
+
+
+                    </propertiesUser>
+                    <!--<proxyConfig>-->
+                    <!--<host>localhost</host>-->
+                    <!--<port>8888</port>-->
+                    <!--<username>jimbob</username>-->
+                    <!--<password>correct horse battery staple</password>-->
+                    <!--<hostExclusions>localhost|*.lazerycode.com</hostExclusions>-->
+                    <!--</proxyConfig>-->
+                    <jMeterProcessJVMSettings>
+                        <xms>1024</xms>
+                        <xmx>1024</xmx>
+                    </jMeterProcessJVMSettings>
+
+                    <!--<jmeterExtensions>-->
+                        <!--<artifact>kg.apc:jmeter-plugins-standard:jar:1.4.0</artifact>-->
+                    <!--</jmeterExtensions>-->
+
+                    <!--<overrideRootLogLevel>debug</overrideRootLogLevel>-->
+
+                </configuration>
                 <executions>
                     <execution>
-                        <id>copy</id>
-                        <phase>verify</phase>
+                        <id>jmeter-tests</id>
                         <goals>
-                            <goal>copy</goal>
+                            <goal>jmeter</goal>
                         </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>com.jayway.jsonpath</groupId>
-                                    <artifactId>json-path</artifactId>
-                                    <version>2.2.0</version>
-                                </artifactItem>
-                            </artifactItems>
-                            <outputDirectory>${project.build.directory}\jmeter\lib</outputDirectory>
-                        </configuration>
                     </execution>
                 </executions>
-                
             </plugin>
-            <plugin>
-              <groupId>com.github.perfrobo</groupId>
-	      <artifactId>perfana-jmeter-maven-plugin</artifactId>
-	      <version>1.0.2</version>	
-	      <configuration>
-		 <propertiesUser>
-		 <perfanaUrl>${perfanaUrl}</perfanaUrl>
-		 <application>${application}</application>
-		 <applicationRelease>${applicationRelease}</applicationRelease>
-		 <testType>${testType}</testType>
-		 <testEnvironment>${testEnvironment}</testEnvironment>
-		  <testRunId>${testRunId}</testRunId>
-		  <CIBuildResultsUrl>${CIBuildResultsUrl}</CIBuildResultsUrl>
-		  <rampupTimeInSeconds>${test.rampup}</rampupTimeInSeconds>
-		  <constantLoadTimeInSeconds>${test.throughput}</constantLoadTimeInSeconds>
-		  <assertResultsEnabled>${assertResultsEnabled}</assertResultsEnabled>
-		  <perfanaEnabled>${perfanaEnabled}</perfanaEnabled>
-  		</propertiesUser>
-	      </configuration>
-              <executions>
-                 <execution>
-                    <id>jmeter-tests</id>
-                     <goals>
-                     <goal>jmeter</goal>
-                     </goals>
-                     </execution>
-                 </executions>
-           </plugin>
-           
         </plugins>
     </build>
-    
-
-    
-    
     <profiles>
         <!-- ************************************************************************ ==
           == Below we have defined two sets of profiles, which control the type of    ==
-          == test that will be run and the targeted environment. By default, this     ==
-          == project runs a load test on the local environment. If you wish to run a  ==
-          == stress test on AE1, you can activate the stress and ae1 profiles:        ==
+          == test that will be run and the targeted environment. If you wish to run a ==
+          == stress test on acc env, you can activate the stress and acc profiles:    ==
           ==                                                                          ==
-          == mvn verify -Pstress -Pae1                                       ==
+          == mvn verify -Pstress -Pacc                                                ==
           == ************************************************************************ -->
+
         <!-- Test Profiles -->
-        
-        <profile>
-            <id>tst</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <properties>
-                <targetBaseUrl>http://mean:3000</targetBaseUrl>
-                <testEnvironment>tst</testEnvironment>
-            </properties>
-        </profile>
-
-
-        <profile>
-            <id>acc</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <properties>
-                <targetBaseUrl>http://mean:3333</targetBaseUrl>
-                <testEnvironment>acc</testEnvironment>
-            </properties>
-        </profile>
-
-        <!-- Load profiles -->
-
         <profile>
             <id>stress</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
+            <activation/>
             <properties>
-                <testType>stressTest</testType>
+                <perfana.testType>stressTest</perfana.testType>
+                <testRunId>${perfana.application}-${perfana.applicationRelease}-stressTest-${maven.build.timestamp}</testRunId>
+                <test.duration>900</test.duration>
                 <test.threads>50</test.threads>
-              	<test.duration>900</test.duration>
-		 		 <test.rampup>300</test.rampup>
-                <perfanaEnabled>true</perfanaEnabled>
-                <graphitePrefix>gatling2</graphitePrefix>
-                <testRunId>${application}-${applicationRelease}-${testType}-${testEnvironment}-${build.time}</testRunId>
+                <test.rampup>300</test.rampup>
             </properties>
         </profile>
 
         <profile>
             <id>load</id>
-            <activation> 
-                <activeByDefault>false</activeByDefault>
-            </activation>
+            <activation/>
             <properties>
-                <activeProfileId>load</activeProfileId>
-                <testType>loadTest</testType>
-                <test.threads>5</test.threads>
-              	<test.duration>600</test.duration>
-		 		 <test.rampup>30</test.rampup>
-                <perfanaEnabled>true</perfanaEnabled>
-                <graphitePrefix>gatling2</graphitePrefix>
-                <testRunId>${application}-${applicationRelease}-${testType}-${testEnvironment}-${build.time}</testRunId>
+                <perfana.testType>loadTest</perfana.testType>
+                <testRunId>${perfana.application}-${perfana.applicationRelease}-loadTest-${maven.build.timestamp}</testRunId>
+                <test.duration>600</test.duration>
+                <test.threads>20</test.threads>
+                <test.rampup>30</test.rampup>
             </properties>
         </profile>
         <profile>
             <id>endurance</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
+            <activation/>
             <properties>
-                <activeProfileId>endurance</activeProfileId>
-                <testType>ENDURANCE</testType>
-                <testType>loadTest</testType>
+                <perfana.testType>enduranceTest</perfana.testType>
+                <testRunId>${perfana.application}-${perfana.applicationRelease}-endurance-${maven.build.timestamp}</testRunId>
+                <test.duration>174600</test.duration>
                 <test.threads>100</test.threads>
-              	<test.duration>174600</test.duration>
-		 		 <test.rampup>300</test.rampup>
-                <perfanaEnabled>true</perfanaEnabled>
-                <graphitePrefix>gatling2</graphitePrefix>
-                <testRunId>${application}-${applicationRelease}-${testType}-${testEnvironment}-${build.time}</testRunId>
+                <test.rampup>300</test.rampup>
             </properties>
         </profile>
+
+        <!-- Test Environments -->
 
         <profile>
-            <id>nightly</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
+            <id>acc</id>
+            <activation/>
             <properties>
-                <activeProfileId>nightly</activeProfileId>
-                <testType>loadTest</testType>
-                <graphitePrefix>jmeter2.nightly</graphitePrefix>
-                <testType>loadTest</testType>
-                <test.threads>20</test.threads>
-              	<test.duration>600</test.duration>
-		 		 <test.rampup>120</test.rampup>
-                <perfanaEnabled>true</perfanaEnabled>
-                <graphitePrefix>gatling2</graphitePrefix>
-                <testRunId>${application}-${applicationRelease}-${testType}-${testEnvironment}-${build.time}</testRunId>
+                <test.productHost>mean</test.productHost>
+                <test.productPort>3000</test.productPort>
             </properties>
         </profile>
-
-
-
-
-
-        <!-- This profile can be used to run the script in debug mode. This results in running the "debug" scenario and results are pushed to debug namespace in Graphite  -->
         <profile>
-            <id>debug</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
+            <id>local</id>
+            <activation/>
             <properties>
-                <debug>true</debug>
-                <graphitePrefix>gatling2.debug</graphitePrefix>
-                <scenario>debug</scenario>
+                <test.productHost>localhost</test.productHost>
+                <test.productPort>3333</test.productPort>
             </properties>
         </profile>
 
-
-        <!-- This profile can be used to route the traffic through a proxy for debugging  -->
-        <profile>
-            <id>proxy</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <properties>
-                <useProxy>true</useProxy>
-            </properties>
-        </profile>
-
-
-
-        <!-- This profile can be used to trigger the assertions  to assert test run results from the pipeline   -->
-        <profile>
-            <id>assert-results</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <properties>
-                <assertResultsEnabled>true</assertResultsEnabled>
-            </properties>
-        </profile>
-
-        <!-- This profile can be used in a distributed test -->
-        <profile>
-            <id>distributed-test</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <properties>
-                <graphitePrefix>gatling2.${hostname}</graphitePrefix>
-            </properties>
-        </profile>
-
-        <!-- This profile can be used to set the script as slave script in a distributed test -->
-        <profile>
-            <id>is-slave-script</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <properties>
-                <perfanaEnabled>false</perfanaEnabled>
-            </properties>
-        </profile>
     </profiles>
 </project>

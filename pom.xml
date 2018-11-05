@@ -11,7 +11,7 @@
         <maven.build.timestamp.format>yyyyMMdd_HHmm</maven.build.timestamp.format>
 
         <!-- Settings for Perfana dashboard -->
-        <perfana.application>Mean</perfana.application>
+        <perfana.application>Demo</perfana.application>
         <perfana.applicationRelease>1.0</perfana.applicationRelease>
 
         <!-- influxdb server -->

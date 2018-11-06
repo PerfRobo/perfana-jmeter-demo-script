@@ -107,12 +107,13 @@
 						<artifact>com.blazemeter:jmeter-parallel:0.7</artifact>
 
                     </jmeterExtensions>
-
-                </configuration>
-				<excludedArtifacts>
+					<excludedArtifacts>
 					<exclusion>commons-pool2:commons-pool2</exclusion>
 					<exclusion>commons-math3:commons-math3</exclusion>
 				</excludedArtifacts>
+
+                </configuration>
+				
 				
                 <executions>
                     <execution>

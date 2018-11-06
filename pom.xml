@@ -15,7 +15,7 @@
         <perfana.applicationRelease>1.0</perfana.applicationRelease>
 
         <!-- influxdb server -->
-        <test.influxdb.url>http://49.27.22.156:8086</test.influxdb.url>
+        <test.influxdb.url>http://localhost:8086</test.influxdb.url>
 
         <!-- By default Jenkins build Url is used -->
         <perfana.buildResultsUrl>${BUILD_URL}</perfana.buildResultsUrl>
@@ -40,7 +40,7 @@
                 <artifactId>perfana-jmeter-maven-plugin</artifactId>
                 <configuration>
                     <perfanaEnabled>true</perfanaEnabled>
-                    <perfanaUrl>http://49.27.22.156:4000</perfanaUrl>
+                    <perfanaUrl>http://localhost:4000</perfanaUrl>
                     <perfanaAssertResultsEnabled>true</perfanaAssertResultsEnabled>
                     <perfanaApplication>${perfana.application}</perfanaApplication>
                     <perfanaTestEnvironment>Delta</perfanaTestEnvironment>
@@ -135,7 +135,7 @@
             <properties>
                 <perfana.testType>enduranceTest</perfana.testType>
                 <testRunId>${perfana.application}-${perfana.applicationRelease}-endurance-${maven.build.timestamp}</testRunId>
-                <test.duration>174600</test.duration>
+                <test.duration>1746</test.duration>
                 <test.threads>100</test.threads>
                 <test.rampup>300</test.rampup>
             </properties>

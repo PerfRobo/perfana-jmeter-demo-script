@@ -11,11 +11,11 @@
         <maven.build.timestamp.format>yyyyMMdd_HHmm</maven.build.timestamp.format>
 
         <!-- Settings for Perfana dashboard -->
-        <perfana.application>Demo</perfana.application>
+        <perfana.application>Webbroker</perfana.application>
         <perfana.applicationRelease>1.0</perfana.applicationRelease>
 
         <!-- influxdb server -->
-        <test.influxdb.url>http://localhost:8086</test.influxdb.url>
+        <test.influxdb.url>http://49.27.22.156:8086</test.influxdb.url>
 
         <!-- By default Jenkins build Url is used -->
         <perfana.buildResultsUrl>${BUILD_URL}</perfana.buildResultsUrl>
@@ -40,10 +40,10 @@
                 <artifactId>perfana-jmeter-maven-plugin</artifactId>
                 <configuration>
                     <perfanaEnabled>true</perfanaEnabled>
-                    <perfanaUrl>http://localhost:4000</perfanaUrl>
+                    <perfanaUrl>http://49.27.22.156:4000</perfanaUrl>
                     <perfanaAssertResultsEnabled>true</perfanaAssertResultsEnabled>
                     <perfanaApplication>${perfana.application}</perfanaApplication>
-                    <perfanaTestEnvironment>local</perfanaTestEnvironment>
+                    <perfanaTestEnvironment>Delta</perfanaTestEnvironment>
                     <perfanaTestRunId>${testRunId}</perfanaTestRunId>
                     <perfanaApplicationRelease>1.0</perfanaApplicationRelease>
                     <perfanaTestType>${perfana.testType}</perfanaTestType>
@@ -61,9 +61,11 @@
                         <test.productPort>${test.productPort}</test.productPort>
                         <test.influxdb.url>${test.influxdb.url}</test.influxdb.url>
                         <test.application>${perfana.application}</test.application>
-
+						<testdata.dir>${project.base.directory}/src/test/test-data </testdata.dir>
+						
 
                     </propertiesUser>
+					
                     <!--<proxyConfig>-->
                     <!--<host>localhost</host>-->
                     <!--<port>8888</port>-->
@@ -75,12 +77,12 @@
                         <xms>1024</xms>
                         <xmx>1024</xmx>
                     </jMeterProcessJVMSettings>
+					<jmeterExtensions>
+                        <artifact>kg.apc:jmeter-plugins-standard:jar:1.4.0</artifact>
+						<artifact>kg.apc:jmeter-plugins-manager:0.1</artifact>
+						<artifact>com.blazemeter:jmeter-parallel:0.4</artifact>
 
-                    <!--<jmeterExtensions>-->
-                        <!--<artifact>kg.apc:jmeter-plugins-standard:jar:1.4.0</artifact>-->
-                    <!--</jmeterExtensions>-->
-
-                    <!--<overrideRootLogLevel>debug</overrideRootLogLevel>-->
+                    </jmeterExtensions>
 
                 </configuration>
                 <executions>

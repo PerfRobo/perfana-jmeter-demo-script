@@ -6,6 +6,8 @@
     <artifactId>jmeter-demo-script</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    
+
     <properties>
         <encoding>UTF-8</encoding>
         <maven.build.timestamp.format>yyyyMMdd_HHmm</maven.build.timestamp.format>
@@ -20,10 +22,10 @@
         <!-- By default Jenkins build Url is used -->
         <perfana.buildResultsUrl>${BUILD_URL}</perfana.buildResultsUrl>
 
-
-
-
     </properties>
+
+  
+
     <build>
         <pluginManagement>
             <plugins>
@@ -61,7 +63,7 @@
                         <test.productPort>${test.productPort}</test.productPort>
                         <test.influxdb.url>${test.influxdb.url}</test.influxdb.url>
                         <test.application>${perfana.application}</test.application>
-						<testdata.dir>${project.base.directory}/src/test/test-data </testdata.dir>
+			<testdata.dir>${project.base.directory}/src/test/test-data </testdata.dir>
 
 
                     </propertiesUser>
@@ -78,14 +80,21 @@
                     </jMeterProcessJVMSettings>
 
                     <jmeterExtensions>
-						<artifact>kg.apc:jmeter-plugins-standard:jar:1.4.0</artifact>
-                        <artifact>kg.apc:jmeter-plugins-standard:jar:1.4.0</artifact>
-						<artifact>com.blazemeter:jmeter-parallel:0.7</artifact>
+			 <artifact>kg.apc:jmeter-plugins-standard:jar:1.4.0</artifact>
+			 <artifact>kg.apc:jmeter-plugins-manager:1.3</artifact> 
+			 <artifact>com.blazemeter:jmeter-parallel:0.7</artifact>
                     </jmeterExtensions>
-					<excludedArtifacts>
-						<exclusion>commons-pool2:commons-pool2</exclusion>
-						<exclusion>commons-math3:commons-math3</exclusion>
-					</excludedArtifacts>
+		    <excludedArtifacts>
+                             <exclusion>commons-pool2:commons-pool2</exclusion>
+                             <exclusion>commons-math3:commons-math3</exclusion>
+                             <exclusion>org.slf4j:slf4j-nop</exclusion>
+                             <exclusion>logkit:logkit</exclusion>
+                             <exclusion>avalon-logkit:avalon-logkit</exclusion>
+                             <exclusion>jdom:jdom</exclusion>
+                             <exclusion>log4j:log4j</exclusion>
+                             <exclusion>commons-logging:commons-logging</exclusion>
+                             <exclusion>excalibur-logger:excalibur-logger</exclusion>
+                        </excludedArtifacts>
 
                     <!--<overrideRootLogLevel>debug</overrideRootLogLevel>-->
 
@@ -98,6 +107,7 @@
                         </goals>
                     </execution>
                 </executions>
+		
             </plugin>
         </plugins>
     </build>

@@ -109,6 +109,11 @@
                     </jmeterExtensions>
 
                 </configuration>
+				<excludedArtifacts>
+					<exclusion>commons-pool2:commons-pool2</exclusion>
+					<exclusion>commons-math3:commons-math3</exclusion>
+				</excludedArtifacts>
+				
                 <executions>
                     <execution>
                         <id>jmeter-tests</id>

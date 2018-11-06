@@ -35,11 +35,9 @@
             </plugins>
         </pluginManagement>
         <plugins>
-		     
             <plugin>
                 <groupId>io.perfana</groupId>
                 <artifactId>perfana-jmeter-maven-plugin</artifactId>
-				<version>1.0.1</version>
                 <configuration>
                     <perfanaEnabled>true</perfanaEnabled>
                     <perfanaUrl>http://localhost:4000</perfanaUrl>
@@ -64,10 +62,9 @@
                         <test.influxdb.url>${test.influxdb.url}</test.influxdb.url>
                         <test.application>${perfana.application}</test.application>
 						<testdata.dir>${project.base.directory}/src/test/test-data </testdata.dir>
-						
+
 
                     </propertiesUser>
-					
                     <!--<proxyConfig>-->
                     <!--<host>localhost</host>-->
                     <!--<port>8888</port>-->
@@ -79,20 +76,20 @@
                         <xms>1024</xms>
                         <xmx>1024</xmx>
                     </jMeterProcessJVMSettings>
-					
-					 <jmeterExtensions> 
+
+                    <jmeterExtensions>
+						<artifact>kg.apc:jmeter-plugins-standard:jar:1.4.0</artifact>
                         <artifact>kg.apc:jmeter-plugins-standard:jar:1.4.0</artifact>
-						<artifact>kg.apc:jmeter-plugins-manager:1.3</artifact>
 						<artifact>com.blazemeter:jmeter-parallel:0.7</artifact>
                     </jmeterExtensions>
-					
 					<excludedArtifacts>
 						<exclusion>commons-pool2:commons-pool2</exclusion>
 						<exclusion>commons-math3:commons-math3</exclusion>
 					</excludedArtifacts>
+
+                    <!--<overrideRootLogLevel>debug</overrideRootLogLevel>-->
+
                 </configuration>
-				
-				
                 <executions>
                     <execution>
                         <id>jmeter-tests</id>
@@ -101,7 +98,6 @@
                         </goals>
                     </execution>
                 </executions>
-				 
             </plugin>
         </plugins>
     </build>
@@ -134,8 +130,8 @@
                 <perfana.testType>loadTest</perfana.testType>
                 <testRunId>${perfana.application}-${perfana.applicationRelease}-loadTest-${maven.build.timestamp}</testRunId>
                 <test.duration>600</test.duration>
-                <test.threads>20</test.threads>
-                <test.rampup>30</test.rampup>
+                <test.threads>10</test.threads>
+                <test.rampup>5</test.rampup>
             </properties>
         </profile>
         <profile>
@@ -144,7 +140,7 @@
             <properties>
                 <perfana.testType>enduranceTest</perfana.testType>
                 <testRunId>${perfana.application}-${perfana.applicationRelease}-endurance-${maven.build.timestamp}</testRunId>
-                <test.duration>1746</test.duration>
+                <test.duration>174600</test.duration>
                 <test.threads>100</test.threads>
                 <test.rampup>300</test.rampup>
             </properties>

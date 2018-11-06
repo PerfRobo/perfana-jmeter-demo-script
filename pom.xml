@@ -77,12 +77,12 @@
                         <xms>1024</xms>
                         <xmx>1024</xmx>
                     </jMeterProcessJVMSettings>
-					<jmeterExtensions>
+					<!-- <jmeterExtensions> 
                         <artifact>kg.apc:jmeter-plugins-standard:jar:1.4.0</artifact>
 						<artifact>kg.apc:jmeter-plugins-manager:0.1</artifact>
 						<artifact>com.blazemeter:jmeter-parallel:0.4</artifact>
 
-                    </jmeterExtensions>
+                    </jmeterExtensions> -->
 
                 </configuration>
                 <executions>

@@ -111,7 +111,7 @@
 					<exclusion>commons-pool2:commons-pool2</exclusion>
 					<exclusion>commons-math3:commons-math3</exclusion>
 				</excludedArtifacts>
-
+				<jmeterVersion>5.0</jmeterVersion>
                 </configuration>
 				
 				
